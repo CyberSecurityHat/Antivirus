@@ -28,7 +28,7 @@ rule jpeg_file_with_corrupted_signature
 {
 	strings:
 		$header_signature1 = { FF D8 FF E0 }
-        $header_signature2 = { FF D8 FF E0 }
+        	$header_signature2 = { FF D8 FF E0 }
 		$footer_signature = { FF D9 }
 	condition:
 		($header_signature1 or $header_signature2)  and !footer_signature at filesize - 2
@@ -38,7 +38,7 @@ rule gif_file_with_corrupted_signature
 {
 	strings:
 		$header_signature1 = { 47 49 46 38 37 61 }
-        $header_signature2 = { 47 49 46 38 39 61 }
+        	$header_signature2 = { 47 49 46 38 39 61 }
 		$footer_signature = { 00 3B }
 	condition:
 		($header_signature1 or $header_signature2)  and !footer_signature at filesize - 2
