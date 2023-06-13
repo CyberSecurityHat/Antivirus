@@ -14,7 +14,7 @@ rule UPX_Packed_PE_file
 		$upx0= "UPX0"
 		$upx1= "UPX1"
 	condition:
-		$mz at 0 and ($upx and $upx0 and $upx1)
+		$mz at 0 and $upx and $upx0 and $upx1
 }
 
 rule png_file_with_corrupted_signature
