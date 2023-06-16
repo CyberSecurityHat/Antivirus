@@ -58,7 +58,7 @@ rule zip_file_with_corrupted_signature
 rule ELF_file
 {
 	strings:
-		$header_signature = { 7f 45 4c 46 }
+		$header_signature = { 7F 45 4C 46 }
 	condition:
 		$header_signature at 0
 }
