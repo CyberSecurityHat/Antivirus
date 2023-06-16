@@ -23,7 +23,7 @@ rule png_file_with_corrupted_signature
 		$header_signature = { 89 50 4E 47 0D 0A 1A 0A }
 		$footer_signature = { 49 45 4E 44 AE 42 60 82 }
 	condition:
-		$header_signature and !$footer_signature at filesize - 8
+		$header_signature at 0 and !$footer_signature at filesize - 8
 }
 
 rule jpeg_file_with_corrupted_signature
@@ -33,7 +33,7 @@ rule jpeg_file_with_corrupted_signature
         	$header_signature2 = { FF D8 FF E0 }
 		$footer_signature = { FF D9 }
 	condition:
-		($header_signature1 or $header_signature2)  and !footer_signature at filesize - 2
+		($header_signature1 at 0 or $header_signature2 at 0)  and !footer_signature at filesize - 2
 }
 
 rule gif_file_with_corrupted_signature
@@ -43,7 +43,7 @@ rule gif_file_with_corrupted_signature
         	$header_signature2 = { 47 49 46 38 39 61 }
 		$footer_signature = { 00 3B }
 	condition:
-		($header_signature1 or $header_signature2)  and !footer_signature at filesize - 2
+		($header_signature1 at 0 or $header_signature2 at 0)  and !footer_signature at filesize - 2
 }
 
 rule zip_file_with_corrupted_signature
@@ -52,5 +52,13 @@ rule zip_file_with_corrupted_signature
 		$header_signature = { 50 4B 03 04 }
 		$footer_signature = { 50 4B 05 06 }
 	condition:
-		$header_signature  and !footer_signature at filesize - 4
+		$header_signature at 0  and !footer_signature at 0 at filesize - 4
+}
+
+rule ELF_file
+{
+	strings:
+		$header_signature = { 7f 45 4c 46 }
+	condition:
+		$header_signature at 0
 }
